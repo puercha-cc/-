@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- 正确显示来源于网络的图片 -->
+  <meta name="referrer" content="never">
+  <title>家乐饰家装列表页</title>
+  <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../jquery-pagination/pagination.css">
+  <link rel="stylesheet" href="../css/list.css">
+</head>
+<body>
+
+  <!--插件是直接写在一个div中的，那么怎么设置样式呢？
+        所有的插件都是一样的:都是通过插件的js程序在定义的标签中写入html内容
+        其他都是 a标签, 点中的标签是 span标签    ---  所以就可以设置样式啦
+  -->
+  <div class="M-box"></div>    <!-- 这是分页显示的区域 -->
+  <div class="container">
+    <ul>
+      <!-- ul中的内容是动态生成的 -->
+    </ul>
+  </div>
+
+  <script src="../js/jquery.min.js"></script>
+  <!-- 导入分页查询插件的js文件 -->
+  <script src="../jquery-pagination/jquery.pagination.js"></script>
+  <script>
+    // 1.获取浏览器地址栏中的参数
+    let str = decodeURIComponent(window.location.search);
+    // 参数中第一个字符是？  字符串截取：从索引是1，实际是第2位开始截取，截取到字符串末尾----为了去掉？
+    str = str.substr(1);
+    // 再将字符串转化为数组。 根据数据,进行查询操作
+    // 数组的 0索引 对应的是 键名,也就是字段名称
+    // 数组的 1索引 对应的是 数据,也就是字段数据
+    const arr = str.split('=');
+    console.log(arr)
+
+    // 2.发送ajax请求
+    // 查询的数据内容过多,要做分页查询
+    // 前端通过插件,实现分页的页面结构,通过点击分页按钮,实现分页查询
+    // 页面显示:第一次默认显示的是第一页的内容;之后根据分页显示,来显示对应页面的内容
+
+    // 第一次调用函数,查询的是第一页的内容,参数是1
+    getAjax(1);
+
+    // 设定发送ajax请求的函数
+    // 每次发送函数,有对应的请求页数参数 ： 第一次发送请求,显示的是第一页的内容,参数就是1
+    function getAjax(page){
+        $.ajax({
+          url : '../php/list.php',
+          // 实际项目中的传参,也是根据后端规定而设定的
+          // 数据1：是 分类名称 cat_one_id
+          // 数据2：是 当前页数 page，也就是函数的参数
+          // 数据3：是 数据数量 line
+          data : {
+            cat_one_id : arr[1],  // 前端url地址中,分类名称数据
+            page : page,          // 当前页数,也就是函数的参数
+            line : 8,             // 每页显示的数据数量,根据项目需求而定
+          },
+          type : 'get',    // 分页查询：要求get方式传参；同时PHP文件中接收参数的方式也是get
+          dataType : 'json',
+          success : function(res){
+             console.log(res) // 可以查看对应的变量
+                // 数据内容res中 可以查看到：
+                // row: "40"    一共查询了多少条数据
+                // sumPage: 5   一共有多少页
+            // 根据请求结果生成页面,也就是li标签
+            // 最终直接将定义好的li标签,写入ul即可
+           
+            // 96行：跳转详情页。在超链接中定义url地址,？后拼接传参参数
+            // item中 goods_id 是数据的id主键值,是唯一的不重复的数据
+            // 传参这个数据,在详情页列表中,进行查询操作
+            let str = '';    //存储动态生成的li标签内容
+            res.forEach(function(item){
+              str += `<li class="list l">
+                        <div class="list-top">
+                            <ol class="list-top-title">
+                                <li class="l"><a href="#">${item.cat_one_id}</a><span>/</span></li>
+                                <li class="l"><a href="#">${item.cat_two_id}</a><span>/</span></li>
+                                <li class="active l">${item.cat_three_id}</li>
+                            </ol>
+                        </div>
+                        <div class="list-middle">
+                            <img src="${item.goods_big_logo}" alt="">
+                            <h3 class="caption">${item.goods_name}</h3>
+                        </div>
+                        <div class="list-footer">
+                          <p class="list-footer-text">
+                              <i class="glyphicon glyphicon-yen"></i>
+                              <span>${item.goods_price}</span>
+                          </p>
+                          <p class="list-footer-detail">
+                              <a href="./detail.html?goods_id=${item.goods_id}">查看商品详情</a>
+                          </p>
+                        </div>
+                      </li>`;       
+            })
+            // 循环遍历结束,将str内容写入到ul中
+            $('ul').html(str);
+
+            // 根据查询结果,来设定分页显示内容
+
+            // 实现分页显示：
+            // 如果要设定分页显示的数据内容
+            // 至少有一个分页,至少会有一条数据 ----- 也就是说至少会存在 res[0]数据
+            $('.M-box').pagination({
+              mode: 'fixed',               // 固定显示的页面数量(固定分页按钮的数量)
+              pageCount : res[0].sumPage,  // 查询结果中的总页数 ----  res[0] 至少有一条数据 sumPage 是res中定义的名称
+              totalData : res[0].row,      // 总数据数量  row 是res中定义的名称
+              current : res[0].page,       // 当前页数    page 是res中定义的名称
+              showData : 8,                // 每页数据数量   自己定义的
+              activeCls : 'active',        // 点中标签的样式
+              coping: true,                // 显示首页末页
+              homePage: '首页',            // 首页的文字内容
+              endPage: '末页',             // 末页的文字内容
+              prevContent: '上页',         // 上页的文字内容
+              nextContent: '下页',         // 下页的文字内容
+              // callback是插件定义好的函数，和success类似，要定义一个形参来存储点击时获取的相关内容。其中有一个方法叫result.getCurrent()：是获取点击的页数
+              callback : function(result){    // 点击的时候,触发的程序  
+                // result.getCurrent() ： 获取当前的页数---插件中的固定语法
+                let p = result.getCurrent();  // 获取当前点击的按钮,所表示的下一次请求的页数
+                // 这当前个页数,就是下次请求的参数
+                getAjax(p);                   // 点击时,再次发送ajax请求,参数是点击的按钮,表示的页数
+              }
+            });
+          }
+        })
+    }
+
+    // 总结
+    // 1.获取浏览器地址栏的数据 ： 作为ajax的查询数据
+    // 2.定义函数,执行ajax请求 ： 第一次请求,参数是1,也就是请求第一页的内容
+    // 3.请求成功,success的函数中
+    //   来根据请求的结果,定义分页显示插件
+    //   分页显示插件中的 callback 方法
+    //          获取 当前点击的页数
+    //          作为点击时,请求的参数 getAjax(参数)
+
+
+  </script>
+</body>
+
+</html>

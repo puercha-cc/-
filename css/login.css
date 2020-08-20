@@ -1,0 +1,11 @@
+*{ margin:0; padding:0;}
+ul,ol,li{ list-style: none;}
+body{background-color: rgba(144, 253, 144,0.3);}
+h1{height:300px;line-height:300px;text-align: center;font-size:50px;color:#12d65d;}
+#login{width: 400px;height: 400px; margin: 0 auto;}
+li{height:40px;font-size:24px;margin-bottom: 20px;}
+input{height:40px;width:260px}
+button{margin-top:20px;margin-left:50px;background-color: #12d65d;width:280px;height:50px;font-size:30px;}
+#msg{margin-top:50px;margin-left:30px; font-size:26px;}
+#footer{text-align:center;margin-top:-80px;}
+#footer span{color:rgb(191, 192, 192)}

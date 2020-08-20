@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家乐饰家装网 - 装修材料购买网站</title>
+    <meta name="description" content="查询家装网，我们为您推荐更多优质商家！放心选择有保障！">
+    <meta name="keywords" content="家装，装修材料">
+    <link rel="stylesheet" href="./iconfont/iconfont.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <div id="searchTop" class="container-fluid">
+        <div class="container ">
+            <p>家乐饰</p>
+            <h1><input type="text" placeholder="厨房电器"><button>搜索</button></h1>
+       </div>
+    </div>
+    <div id ="title">“家乐饰”家装产品电子商务平台</div>
+    <header id="header" class="container-fluid">
+        <div class="container clear">
+            <div class="header-nav l">
+                <a href="./pages/synopsis.html">协议声明</a><span>|</span>
+                <a href="./pages/notice.html">平台规则</a><span>|</span>
+                <a href="./pages/server.html">客户服务</a><span>|</span>
+                <a href="./pages/news.html">最新快报</a>
+            </div>
+            <div class="header-che r">
+                <button  name="buyCar"><i class="iconfont icongouwuchekong"></i> 购物车</button>
+            </div>
+            <div class="header-subnav r">
+                <a href="JavaScript:;" name="login" >登录</a><span>|</span>   <!-- 登录页面的跳转在252行中用js设定 -->
+                <a href="./pages/res.html" >注册</a><span>|</span>
+                <a href="./index.html" name="back" >退出登录</a>
+            </div>
+        </div>
+    </header>
+    <div id="banner">
+        <!-- 需要轮序播放的图片,没有多的5和1，多出来的5和1是动态生成的-->
+        <ul class="banner-a clear">
+           <li><img src="./img/banner_4041.jpg" alt=""></li>
+           <li><img src="./img/banner_4042.jpg" alt=""></li>
+           <li><img src="./img/banner_4043.jpg" alt=""></li>
+           <li><img src="./img/banner_4044.jpg" alt=""></li>
+        </ul>
+        <!-- 与轮播图对应的焦点按钮 是根据轮播图的图片数量动态生成的-->
+         <!-- 所以ol中不需要写任何内容，但在样式设置时要设置ol中li的样式 -->
+        <ol class="banner-b"></ol>
+        <div class="banner-c">
+            <!-- name是为了区分  <   >   -->
+            <a href="JavaScript:;" name="left"> &lt; </a>   
+            <a href="JavaScript:;" name="right"> &gt; </a>
+        </div>
+    </div>
+    <div id="content" class="container">
+            <ul class="content-list">
+                <!-- a链接跳转页面同时传参：在href中地址之后 添加 ?属性=属性值 -->
+                <li><a href="./pages/list.html?cat_one_id=厨房电器">厨房电器</a></li>
+                <li><a href="./pages/list.html?cat_one_id=电脑办公">电脑办公</a></li>
+                <li><a href="./pages/list.html?cat_one_id=智能设备">智能设备</a></li>
+                <li><a href="./pages/list.html?cat_one_id=烹饪厨具">烹饪厨具</a></li>
+                <li><a href="./pages/list.html?cat_one_id=家装建材">家装建材</a></li>
+                <li><a href="./pages/list.html?cat_one_id=大家电">家装家电</a></li>
+            </ul>
+    </div>
+    <div id="storey" class="container">
+        <ul>
+            <li>
+                <h3>秒杀区域</h3>
+                <div class="content">
+                    <p>
+                       <i>秒杀倒计时</i><br>
+                       <span name="oSpan1"></span>
+                    </p>
+                    <p>
+                        <img src="./img/miaosha1.jpg" alt="">
+                        <em>【新品】Xiaomi/小米(MI) 电视4C 55英寸 2GB+8GB 四核64位处理器 4K HDR超高清平板电视</em>
+                    </p>
+                    <p>
+                        <img src="./img/miaosha2.jpg" alt="">
+                        <em>飞利浦（Philips）39PHF5451/T3 39英寸 高清智能 LED平板液晶电视机</em>
+                    </p>
+                    <p>
+                        <img src="./img/miaosha3.jpg" alt="">
+                        <em>美的（Midea） 1.5匹 变频 智弧 静音云智能 冷暖 挂机空调KFR-35GW/WDBA3@</em>      
+                    </p>
+                </div>
+            </li>
+            <li>
+                <h3>每日特价</h3>
+                <div class="content">
+                    <p>
+                        <i>当前时间</i><br>
+                        <span name="oSpan2"></span>
+                    </p>
+                    <p>
+                        <img src="./img/tejia1.jpg" alt="">
+                        <em>戴尔（DELL） U2414H 23.8英寸窄边框旋转升降IPS屏 出厂色彩校准 99%sRGB 电脑显示器</em>
+                        <strong>特价：2000元 &nbsp;&nbsp;&nbsp;<span>原价：3423元</span></strong>
+                    </p>
+                    <p>
+                        <img src="./img/tejia2.jpg" alt="">
+                        <em>小米（MI）小米手环2 二代 防水 智能运动手表 男女跑步 心率 记计步器 智能手表</em>
+                        <strong>特价：309元 &nbsp;&nbsp;&nbsp;<span>原价：399元</span></strong>
+                    </p>
+                    <p>
+                        <img src="./img/tejia3.jpg" alt="">
+                        <em>HUAWEI/华为 WATCH 2 智能运动手表 4G插卡独立通话、支持移动支付</em>  
+                        <strong>特价：1720元 &nbsp;&nbsp;&nbsp;<span>原价：1999元</span></strong>    
+                    </p>
+                </div>
+            </li>
+            <li>
+                <h3>更多好货</h3>
+                <div class="content">
+                    <p>
+                        <i>更多好物抢购</i><br>
+                        <span>品类齐全<br>轻松购物</span>
+                    </p>
+                    <p>
+                        <img src="./img/haowu1.jpg" alt="">
+                        <em>戴尔（DELL） U2414H 23.8英寸窄边框旋转升降IPS屏 出厂色彩校准 99%sRGB 电脑显示器</em>
+                        
+                    </p>
+                    <p>
+                        <img src="./img/haowu2.jpg" alt="">
+                        <em>小米（MI）小米手环2 二代 防水 智能运动手表 男女跑步 心率 记计步器 智能手表</em>
+                        
+                    </p>
+                    <p>
+                        <img src="./img/haowu3.jpg" alt="">
+                        <em>HUAWEI/华为 WATCH 2 智能运动手表 4G插卡独立通话、支持移动支付</em>  
+                           
+                    </p>
+                </div>
+            </li>
+            <li>
+                <h3>新品首发</h3>
+                <div class="content">
+                    <p>
+                        <i>今日上新</i><br>
+                        <span>新款家居产品<br>强势上新</span>
+                    </p>
+                    <p>
+                        <img src="./img/xinpin1.jpg" alt="">
+                        <em>雷士照明(NVC) 美式乡村吊灯简欧欧式客厅灯饰简约创意书房卧室餐厅北欧灯具铁艺吊灯</em>                     
+                    </p>
+                    <p>
+                        <img src="./img/xinpin2.jpg" alt="">
+                        <em>雷士照明(NVC) 隐形风扇灯精致简约现代铁艺四叶18瓦LED灯智能吊扇灯风扇灯客厅餐厅吊灯</em>
+                    </p>
+                    <p>
+                        <img src="./img/xinpin3.jpg" alt="">
+                        <em>简约现代艺术环形吊灯创意个性北欧餐厅灯三头吧台卧室客厅灯具</em>       
+                    </p>
+                </div>
+            </li>
+            <li>
+                <h3>为你推荐</h3>
+                <div class="content">
+                    <p>
+                        <i>猜你喜欢</i><br>
+                        <span>商家推荐<br>种类丰富</span>
+                    </p>
+                    <p>
+                        <img src="./img/tuijian1.jpg" alt="">
+                        <em>【今日到手价189】东果电陶炉家用 红外炉 不挑锅具智能双控</em>
+                    </p>
+                    <p>
+                        <img src="./img/tuijian2.jpg" alt="">
+                        <em>荣事达（Royalstar）养生壶YSH1860触控式养生壶全自动加厚玻璃电热烧水壶花茶壶黑茶</em>
+                    </p>
+                    <p>
+                        <img src="./img/tuijian3.jpg" alt="">
+                        <em>苏泊尔（SUPOR）ZN28YK807-150多功能不锈钢家用电蒸锅 大容量 双层电蒸笼 三层火锅</em>    
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <footer id="footer" class="container">
+        <div class="footer-nav clear">
+            <div class="footer-nav-list l">
+                <dl>
+                    <dt>帮助中心</dt>
+                    <dd><a href="#">账户管理</a></dd>
+                    <dd><a href="#">购物指南</a></dd>
+                    <dd><a href="#">订单操作</a></dd>
+                </dl>
+                <dl>
+                    <dt> 服务支持</dt>
+                    <dd><a href="#">售后政策</a></dd>
+                    <dd><a href="#">自助服务</a></dd>
+                    <dd><a href="#">相关下载</a></dd>
+                </dl>
+                <dl>
+                    <dt>线下门店</dt>
+                    <dd><a href="#">家居建材</a></dd>
+                    <dd><a href="#">服务网点</a></dd>
+                    <dd><a href="#">授权体验</a></dd>
+                </dl>
+                <dl>
+                    <dt>帮助中心</dt>
+                    <dd><a href="#">账户管理</a></dd>
+                    <dd><a href="#">购物指南</a></dd>
+                    <dd><a href="#">订单操作</a></dd>
+                </dl>
+                <dl>
+                    <dt>关注我们</dt>
+                    <dd><a href="#">新浪微博</a></dd>
+                    <dd><a href="#">官方微信</a></dd>
+                    <dd><a href="#">联系我们</a></dd>
+                </dl>
+                <dl>
+                    <dt>特色服务</dt>
+                    <dd><a href="#">F码通道</a></dd>
+                    <dd><a href="#">礼物码</a></dd>
+                    <dd><a href="#">防伪查询</a></dd>
+                </dl>
+            </div>
+            <div class="footer-nav-phone r">
+                <h3>400-100-5678</h3>
+                <p>周一至周日 8:00-18:00 <br>（仅收市话费）</p>
+                <div><i class="iconfont iconliuyan"></i> 人工客服</div>
+            </div>
+        </div>
+    </footer>
+    <div id="storeNav" class="container">
+        <ul>
+            <li class="active">秒杀区域</li>
+            <li>每日特价</li>
+            <li>更多好货</li>
+            <li>新品首发</li>
+            <li>为你推荐</li>
+            <li name="backTop">返回顶部</li>
+        </ul>
+    </div>
+    </div>
+    
+
+    <script src="./js/banner.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/cookie.js"></script>
+    <script>
+// 轮播图
+    const oDiv = document.querySelector('#banner');
+    const setLoop = new SetLoop(oDiv);  
+    setLoop.init();    
+   
+// 在根目录页面中设定cookie，这样所有的文件都可以使用cookie
+
+ // 通过js设定登录跳转效果,添加地址来源
+    $('[name="login"]').click(function () {
+        window.location.href = `./pages/login.html?${window.location.href}`;
+    })
+
+    // 退出登录,就是删除 cookie中的login
+    $('[name="back"]').click(function () {
+        setCookies('login', '随便', -1);   //  -1设置时效过期
+        window.alert('退出登录成功');
+    })
+    // 购物车,有cookie中的login,可以跳转；没有login,必须先登录
+    $('[name="buyCar"]').click(function () {
+        // 判断是否有login
+        // 获取当前cookie对象
+        const cookieObj = getCookieObj(document.cookie);
+        // 如果对象中没有login,获取结果是 undefined
+        if (cookieObj['login'] === undefined) {
+            // 弹出确认框,看用户是否现在就要去登录 ---- 如果点击确认框的确定,执行结果是true
+            let bool = window.confirm('您还没有登录,点击确定跳转登录页面');
+            // 如果点击的结果是true,证明点击的是确定,跳转至登录页面--- 同时传参，告诉登录页面我是从哪来的，登录之后就会从哪来的回哪去
+            if (bool === true) {
+                window.location.href = `./pages/login.html?${window.location.href}`;
+            }
+            // 如果 有 login 的登录状态码,证明已经登录 ---- 直接跳转至购物车页面
+        } else if (cookieObj['login'] === '1') {
+            window.location.href = './pages/cart.html';
+        }
+    })
+
+
+// 楼层导航效果
+    // 1.滚动条监听
+    $(window).scroll(function(){
+        // 1)当滚动条高度 > 500 时，吸顶div 和侧边栏显示
+        if($(window).scrollTop() > 500){    // 注意：scrollTop 后面有()
+            $('#searchTop').slideDown(1000);
+            $('#storeNav').fadeIn(1000);     //侧边栏逐渐显示 
+        }else{
+            $('#searchTop').slideUp(1000);
+            $('#storeNav').fadeOut(1000);
+        }
+        // 2）页面滚动到 某个区域时，对应的侧边栏 某个区域 添加样式---字体变绿色
+        // 循环遍历 页面区域 li。当滚动条滚动到页面 某个区域时，对应的给侧边栏中某个区域添加样式
+        $('#storey li').each(function(key,item){   // key:索引  value:li标签对象
+            // $('标签').offset()   获取标签对象到页面左上角的间距  .top获取上距离  .left 获取左距离
+            //   不 - 100 ，是滚动条到达页面区域最底部时，才给侧边栏 对应区域添加样式。 
+            if( $(window).scrollTop()  > $(item).offset().top - 280 ){  
+                $('#storeNav li').eq(key)  // 找到和当前 storey页面区域 li 索引相同的 侧边栏中的 li 
+                .addClass('active')        // 给找到的 索引与页面区域li 相同的 侧边栏li 添加样式
+                .siblings().removeClass('active');   // 所有兄弟li 标签 去除样式
+            }
+        })
+    })
+        // 2.点击返回顶部
+        $('[name="backTop"]').click(function(){
+            // 设定滚动条高度为0，使用jQuery中自定义动画。
+            // 注意：jQuery 获取滚动条必须是$(window);设定滚动条高度必须是$('html')
+            $('html').animate( {scrollTop:0},1000 );
+        })
+        // 3.点击侧边栏li,到达页面对应区域
+        //  返回顶部li 的效果是 返回滚动条为0 的位置
+        //  给 其他li添加点击效果
+        //  循环遍历所有 侧边栏li 
+        $('#storeNav li').each(function(key,item){
+            // 给name 不是backTop 的li 添加事件
+            // 标签对象.attr(属性) --- 获取其他属性的属性值   prop()是获取布尔属性的属性值
+            if( $(item).attr('name') !== 'backTop' ){
+                $(item).click(function(){
+                    $('html').animate( {scrollTop:$('#storey li').eq(key).offset().top - 250},1000 ); 
+                })
+            }
+        })
+
+
+
+// 倒计时
+    document.querySelector('[name="oSpan1"]').innerHTML = mySetTime('2020-11-11');
+    setInterval(function () {
+        document.querySelector('[name="oSpan1"]').innerHTML = mySetTime('2020-11-11');
+    }, 1000)
+    function mySetTime(endTime) {
+        var start = new Date();   // 起始时间是当前时间      
+        var end = new Date(endTime);   // 结束事件是设定时间      
+        // (结束时间戳 - 起始时间戳) / 1000 取整  随便上下四舍五入都可以
+        var times = parseInt((end.getTime() - start.getTime()) / 1000);  // 获取计算时间差    
+        var d = parseInt(times / (24 * 60 * 60));   // 计算天   时间差秒数 / 1天的秒数   取整   
+        var h = parseInt((times % (24 * 60 * 60)) / (60 * 60));  // 计算时   转化为天之后的余数 / 1小时的秒数   取整
+        var m = parseInt((times % (60 * 60)) / 60);  // 计算分   转化为小时之后的余数 / 1分钟的秒数   取整
+        if (m < 10) {
+            m = '0' + m;
+        }  
+        var s = times % 60;    // 计算秒   转化为分钟之后的余数 
+        if (s < 10) {
+            s = '0' + s;
+        }
+        // 现在有多个数值需要作为返回值,在函数之外使用
+        return `距离双十一!!!<br>${d}:${h}:${m}:${s}`;
+    }
+
+
+
+// 当前时间
+    myGetTime();
+    setInterval(function () { myGetTime(); }, 1000);
+    function myGetTime() {  
+        var d = new Date();   // 获取当前时间     
+        var year = d.getFullYear();   // 获取4位年份    
+        var month = d.getMonth() + 1;     // 获取月份  实际月份是获取结果+1
+        var date = d.getDate();   // 获取日期  
+        var week = d.getDay();    // 获取星期  需要转化为中文  
+        var weekArr = ['日', '一', '二', '三', '四', '五', '六'];
+        week = weekArr[week];    
+        var hours = d.getHours();   // 获取小时     
+        var minutes = d.getMinutes();    // 获取分钟
+        // 如果分钟是个位数值,也就是小于10,在数值前,拼接 0 
+        if (minutes < 10) {
+            minutes = '0' + minutes;
+        }     
+        var seconds = d.getSeconds();   // 获取秒
+        // 如果秒是个位数值,也就是小于10,在数值前,拼接 0 
+        if (seconds < 10) {
+            seconds = '0' + seconds;
+        }
+        document.querySelector('[name="oSpan2"]').innerHTML = ` ${year}年${month}月${date}日<br>星期${week}<br>${hours}:${minutes}:${seconds}`;
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家乐饰登录页面</title>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+  <h1>登录家乐饰网站</h1>
+  <form>
+    <div id="login">
+      <ul>
+        <li>账号: <input type="text" name="username"></li><br>
+        <li>密码: <input type="password" name="userpwd"></li><br>
+        <li><button type="submit">登录</button></li>
+      </ul>
+      <div id="msg" name="msg"></div>
+    </div> 
+  </form>
+    <div id="footer">
+           <span> 已阅读并同意：家乐饰 </span> 用户协议 <span> 和 </span> 隐私政策 &nbsp;&nbsp;&nbsp;
+    </div> 
+    <script src="../js/cookie.js"></script>   <!-- 登录成功后设定cookie -->
+    <script src="../js/jquery.min.js"></script>
+    <script>
+
+   // form表单提交时发送ajax请求，并且获取请求结果
+    $('form').submit(function (e) {
+        // 先阻止默认事件的执行
+        e.preventDefault();
+
+        // 获取输入的数据
+        let username = $('[name="username"]').val();
+        let userpwd = $('[name="userpwd"]').val();
+
+        //可以写验证判断---例如：账号不能为空
+
+        $.ajax({
+          url: '../php/login.php',
+          type: 'post',   // 登录时的账号、密码也不能在地址栏显示
+          data: { userName: username, userPwd: userpwd },
+          dataType: 'json',
+          success: function (res) {
+            if(res == '1'){
+              window.alert('登录成功,点击确定返回上一步');
+              // 跳转回首页面时,要告诉首页面登录成功了，要设定上cookie
+              // 在url地址后,拼接参数-----为了 哪儿来的,回哪儿去
+
+              //  先获取url地址----decodeURIComponent是转化地址栏中的中文
+              let str = decodeURIComponent(window.location.search);
+              // 参数中第一个字符是？  字符串截取：从索引是1，实际是第2位开始截取，截取到字符串末尾----为了去掉？
+              // 截取之后：str中存储的是地址栏中？之后的参数
+              str = str.substr(1);
+
+              /*  判断一下,地址是否是首页面----首页面就传参 login=1  
+                  判断url地址中的参数数据中,是否有 'index.html' 这个 页面名称
+                  如果有,就是首页,如果没有就是其他页面
+                  if (str.indexOf('index.html') === -1) {
+                    // 没有index.html,是其他页面,直接跳转回去就行了
+                    window.location.href = str;
+                  } else {
+                    // 是首页面要拼接 login=1 参数
+                    window.location.href = str + '?login=1';
+                  }
+              */ 
+
+              // 因为 cookie设定在www文件夹下，所以在登录页面中：成功后设定好的cookie 在首页面 中也设定上了
+              // 首页面的跳转就不需要拼接参数 login=1,可以直接转换回来的页面
+              window.location.href = str;
+
+
+              // 登录成功：设定cookie ---- 此时的cookie 是 www文件夹 下的 cookie
+              // 可以在登录页面上设定一个全局的cookie,任意一个文件都可以获取到cookie。就不用在 首页面上设定 cookie
+              setCookies('login' , 1 , 7*24*60*60);
+              
+            }else if(res == '0') {
+              // 返回值是 0 ,表示没有数据,登录失败
+              window.alert('登陆失败，用户名或密码错误');
+            }
+          }
+        })
+      })
+
+
+    </script>
+
+
+</body>
+</html>

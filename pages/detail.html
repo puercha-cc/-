@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- 正确显示网络来源图片 -->
+  <meta name="referrer" content="never">
+  <title>家乐饰家装详情页</title>
+  <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/detail.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="panel">
+        <!-- 动态生成渲染页面的具体内容 -->
+  </div>
+</div>
+<script src="../js/cookie.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script>
+
+    // 定义一个变量,来存储 ajax的请求结果：方便在其他函数数据中使用
+    let result = [];
+
+    // 1.先获取地址栏中的数据信息window.location.search ，直接截取？.substr(1)
+    let str = decodeURIComponent(window.location.search.substr(1));
+    // 根据 = 将字符串 转化成数组
+    const arr = str.split('=');
+
+    // 2.发送ajax请求,获取结果生成页面内容
+    // 与列表页需要分页显示,需要反复查询不同 --- 详情页只需要查询一次
+    $.ajax({
+      url:'../php/detail.php',
+      type:'post',      //  一般除了搜索，都是post方式。同时PHP文件中接收参数的方式也是post
+      data:{goods_id : arr[1]},    // 列表页传的参数是： goods_id =${item.goods_id}"  所以：arr[0] 是goods_id。 arr[1] 是${item.goods_id}
+      dataType : 'json',
+      success : function(res){
+      // console.log(res);
+      // 对全局作用域变量 result 进行赋值,便于在函数外调用--- 在函数外声明，在函数内赋值，方便全局/其他函数中调用
+      result = res;    //132行中就可以直接使用了
+
+        // 根据数据,生成页面
+        let str = '';
+        str = ` <div class="panel-header">
+                  <h2>商品详细信息</h2>
+                </div>
+                <div class="panel-body">
+                  <div class="panel-body-img">
+                    <img src="${res.goods_small_logo}" alt="">
+                  </div>
+                  <div class="panel-body-text">
+                    <h3>${res.goods_name}</h3>
+                    <h4>
+                      <i class="glyphicon glyphicon-yen"></i>
+                      <span>${res.goods_price}</span>
+                    </h4>
+                    <div>
+                      <button type="button" class="btn btn-default">XL</button>
+                      <button type="button" class="btn btn-default">L</button>
+                      <button type="button" class="btn btn-default">M</button>
+                      <button type="button" class="btn btn-default">S</button>
+                      <button type="button" class="btn btn-default">XS</button>
+                    </div>
+                    <p>
+                      <a href="javascript:;" role="button">立即购买</a>
+                      <a href="#" name="inCar" role="button">加入购物车</a>
+                    </p>
+                  </div>
+                </div>
+                <ul class="panel-footer clear">
+                  <li class="active l"><a href="#">商品详细信息</a></li>
+                  <li class="l"><a href="#">商品参数信息</a></li>
+                  <li class="l"><a href="#">相关商品</a></li>
+                </ul>
+                <div class="panner-introduce">${res.goods_introduce}</div>`;
+        // 将字符串内容,写入到标签中
+        $('.panel').html(str);
+      }
+    })
+
+    // 3.给加入购物车按钮添加点击事件效果
+    // 因为加入购物车 按钮,是动态生成的内容。所以：如果你直接写：ajax是异步请求,无法给标签添加事件
+    // 也就是说：如果直接 获取 标签,会是空数组。所以必须写成事件委托的形式
+    /*jQuery中事件委托的语法形式：（有两种写法）
+         1） $().on('事件类型',(e)=>{ 
+                if(e.target.tagName === '大写标签名称'){执行程序}
+             })
+         2） $().on('事件类型','标签名/in名称/class名称/属性=属性值',(e)=>{ })
+    */ 
+    $('.panel').on('click' , '[name="inCar"]' , function(){
+        // (1.)判断是否登录了,也就是判断 cookie 是否有login这个属性
+        // 如果有login属性,就可以正常加入购物车； 如果没有login属性，先去登录
+        const cookieObj = getCookieObj(document.cookie);    // 获取cookie
+
+        if( cookieObj.login === undefined ){
+            // 没有login属性时,弹出确认框
+            let bool = window.confirm('您还没有登录,点击确定跳转登录页面');
+            // 点击确定时：
+            if(bool === true){
+              // 跳转到登录页面，同时传参当前页面的地址信息。 为了告诉登录页面,我是从哪儿来的
+              window.location.href = `../pages/login.html?${window.location.href}`;
+            }else{
+              // 如果点击取消,后面的加入购物车的程序,也不执行了，终止一切
+              return false;
+            }
+        }else if(cookieObj.login === '1'){
+            // 有login属性时，跳转购物车页面
+            window.location.href = './cart.html';
+            // 跳转到购物车页面的同时，要将这个商品加入到购物车中去，也就是将这条数据添加到购物车页面中
+            // 如果购车中没有这条数据,就要新增这条数据； 如果购物车中有这条数据,要在购买数量上 增加1        
+           
+            /*
+             // 实际项目中应该是将数据写入到数据库中，但现在是做一个本地模拟数据。
+              浏览器本地存储数据有两种方式：
+               1）cookie 
+                  前端程序、后端程序都可以设定。读取时，有作用域，不能跨域读取。默认时效是会话时效
+                  存储内容较小，一般是400k左右，每个浏览器不同
+               2）localStorage 
+                  只能是前端程序设定，后端语言无法操作。读取时没有作用域，所有文件都可以读取
+                  默认是永久存在，除非你删除
+                  存储内容非常多，可以满足存储数据的需求，存储的数据类型必须是json串
+                  设定localStorage： localStorage.setItem('键名', json串形式的数据JSON.stringify('数据')) 
+                  获取localStorage： JSON.parse( localStorage.getItem('键名') )
+                     注意：设定时一定要设定为json串的形式。获取时获取到的也是json串形式，就要还原为字符串形式  
+            */ 
+           // 在点击事件函数中,就可以使用 ajax的请求结果 res
+            if(localStorage.getItem('cart') === null  ){
+              // 如果购物车是空的，就直接把这个商品信息写入购车中就可以了
+              // 但是要在有数据的基础上,增加一些内容
+              result.num = 1;     // 购买数量信息,第一次默认是1 ---- 也就是将商品加入购物车后，显示的数量默认是1
+              result.buy = true ;  // 默认当前商品是购买状态
+              // 不能直接存储在 购物车信息中 --- 因为购物车信息有可能会有多条信息,要定义成数组的形式
+              // 所以：建立一个空数组--  用var    用const导致不能在外面调用
+              var arr = [];
+              // 将对象写入空数组,作为第一条数据信息----也就是购物车中的第一条信息
+              arr.push(result);
+            }else{    
+              // 先默认购物车中没有当前商品。 跟判断质数的开关变量,思路相同
+              let bool = true;
+
+              // 购物车数据已经存在：
+              // 如果已经有当前商品,是在购买商品数量的基础上+1
+              // 如果没有当前商品,是在有购物车原有数据的基础上,新增当前商品数据
+
+              // 先获取 localStorage 中的信息,是json串形式，先还原为对应的数据类型
+              var arr = JSON.parse(localStorage.getItem('cart')) ;
+
+              // 循环遍历这个数组
+              arr.forEach(function(item){
+                // 也就是 如果 购车车中的数据,goods_id 数值 与 当前商品 goods_id数值 相同时
+                // 证明购车中,已经有当前商品了：就给当前数据的数量num +1
+                if(item.goods_id === result.goods_id){
+                    item.num++;
+                    // 给变量赋值false,表示购物车中有当前商品
+                    bool = false;
+                }
+              })
+              
+              // 循环结束
+              // 如果 bool仍然是 true 证明 购物车中没有当前商品,要新增当前商品
+              // 如果 bool是false 证明 购物车中有当前商品,已经增加够买数量,不用再操作了
+              if(bool === true){
+                result.buy = true;
+                result.num = 1;
+                arr.push(result);   // 在最后新增数据
+                //arr.unshift(result);   // 在起始新增数据
+              }
+
+            }
+
+            // 当所有的判断都结束了,会有一个新的 arr
+            // 存储的是 点击 按钮之后,新的数据内容
+            // 将新的数据内容,写入到 localStorage 中 ---- 这里是设定 localStorage
+            localStorage.setItem('cart' , JSON.stringify(arr) );
+              /*
+                json字符串的语法：
+                    PHP中：json_encode()  将其他数据类型转化为json字符串
+                          json_decode()  将json串还原为对应的数据类型
+                    JavaScript中： JSON.stringify()    将其他类型转化为json字符串
+                                   JSON.parse()        将json串还原为对应的数据类型
+              */ 
+        }
+    })
+
+    
+    /*
+    总结：将数据加入购物车信息的思路“
+
+      实际上这个操作,应该是后台数据库的操作
+      我们现在没有数据库,只能本地用js操作
+
+      判断购物车是否是空车
+        空车 : 当前数据,新增两个属性
+               默认是购买状态
+               默认购买数量是1
+               将新的对象,写入到数组
+
+        非空 : 获取当前购物车信息
+               定义一个变量,作为开关
+               循环遍历购物车数据
+                  如果 购物车商品goods_id === 当前商品goods_id
+                  证明当前商品已经在购物车中,给购买数量 ++
+                  给开关赋值false
+               循环结束,判断 开关 
+                  如果是 true
+                  当前数据,新增两个属性
+                  默认是购买状态
+                  默认购买数量是1
+                  将新的对象,写入到数组
+      将最终的数组结果,写入到 localStorage 中
+    */
+</script>
+</body>
+</html>

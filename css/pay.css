@@ -1,0 +1,23 @@
+*{
+    margin:0;
+    padding:0;
+}
+.text{
+    width:800px;
+    height:100px;
+    line-height: 100px;
+    text-align:center;
+    font-size:40px;
+    font-family:monospace;
+    margin:60px auto;
+    background: rgb(60, 184, 101);
+    color:antiquewhite;
+}
+span{
+    color:rgb(228, 69, 69);
+}
+.img{
+    width:600px;
+    height:500px;
+    margin:40px auto;
+}

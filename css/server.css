@@ -1,0 +1,36 @@
+*{ margin:0; padding:0;}
+ul,ol,li{ list-style: none;}
+body{background-color: rgba(144, 253, 144,0.3);}
+a{text-decoration: none; color:#424242;}
+.l{ float:left;}
+.r{ float:right;}
+.clear::after{ content:""; display:block; clear:both;}
+
+#header{width:1400px;height:400px;margin:40px auto;}
+#header .text{height:40px;color:rgb(46, 197, 46);}
+#header .content{height:360px;width:100%;margin-top:20px;}
+#header .content li{float:left;height:160px;width:300px;margin-right:40px;margin-bottom:10px;}
+#header .content li .content-img{height:160px;width:90px;text-align:center;}
+#header .content li .content-img i{font-size:66px;line-height:90px;margin-top: 20px;color:rgb(57, 120, 136);}
+#header .content li .content-tip{height:160px;width:200px;margin-left:10px;}
+#header .content li .content-tip h2{line-height:50px;}
+#header .content li .content-tip h2:hover{color:#ee931d;cursor: pointer;}
+#header .content li .content-tip p{line-height:26px;color:rgb(196, 196, 196);}
+
+#body{width:1400px;height:100px;margin:40px auto;}
+#body .text{height:40px;color:rgb(46, 197, 46);}
+#body .content{height:80px;width:100%;margin-top:20px;}
+#body .content li{height:80px;width:200px;margin-right:20px;text-align:center;background-color: rgba(216, 190, 216,0.7);line-height:80px;font-size:24px;}
+#body .content li:hover{color:#ee931d;cursor: pointer;}
+
+#footer{width:1400px;height:200px;margin:80px auto;}
+#footer .text{height:30px;color:rgb(46, 197, 46);}
+#footer .content{height:120px;width:100%;background:b;}
+#footer .content li{margin-right:35px;height:160px;width:410px;background: rgba(247, 247, 164,0.4);}
+#footer .content li h3{height:40px;font-weight:bold;}
+#footer .content li p{height:30px;font-size:20px;color:rgb(196, 196, 196)}
+#footer .content li div{height:50px;line-height:50px;font-size:24px;background: rgb(46, 197, 46);color:white;width:120px;text-align:center;}
+#footer .content li div:hover{color:#ee931d;cursor: pointer;}
+
+#target{width:200px;height:60px;border-radius:6%;margin:20px 0 0 860px;text-align:center;line-height:60px;font-size:30px;background: rgb(196, 196, 196);}
+ #target a{text-decoration: none;color:rgb(53, 52, 52);}

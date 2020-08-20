@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/pay.css">
+</head>
+<body>
+    <div class="text"></div>
+    <div class="img">
+        <img src="../img/pay1.jpg" alt="">
+    </div>
+
+    <script src="../js/jquery.min.js"></script>
+    <script>
+          let str = decodeURIComponent(window.location.search);
+    // 参数中第一个字符是？  字符串截取：从索引是1，实际是第2位开始截取，截取到字符串末尾----为了去掉？
+    str = str.substr(1);
+    // 再将字符串转化为数组。 根据数据,进行查询操作
+    // 数组的 0索引 对应的是 键名,也就是字段名称
+    // 数组的 1索引 对应的是 数据,也就是字段数据
+    const arr = str.split('=');
+    console.log(arr[1]);
+    $('.text').html(`您需要支付<span>${arr[1]}</span>元，请扫码支付`)
+    </script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>家乐饰家装购物车页</title>
+  <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/cart.css">
+</head>
+
+<body>
+  <div class="header clear ">
+    <h1 class="l">购物车信息</h1>
+    <h1 class="r">管理</h1>
+  </div>
+  <div class="container"></div>
+  <script src="../js/jquery.min.js"></script>
+  <script>
+    // 1.获取 localStorage 中的数据信息
+    const cateArr = JSON.parse(localStorage.getItem('cart'));
+    setPage(cateArr);
+
+    function setPage(array) {
+      // 定义变量来存储数据,定义在函数内，循环外，在循环中赋值
+       NUM = 0;
+       TYPE = 0;
+       PAY = 0;
+
+      // 2.根据数据内容来生成页面 ----- 生成的页面部分分为三部分
+
+      // 第一部分,是页面的上方内容,是固定内容
+      let str = `<div class="panel">
+                    <div class="panel-header">
+                       <label>
+                          <button name="all">全选</button>
+                          <button name="no">不选</button>
+                          <button name="not">反选</button>
+                       </label>
+                    </div>
+                    <div class="panel-footer">`;
+
+      // 第二部分是商品的信息部分,是根据 购物车信息 循环遍历生成的
+      // 定义写的数据,选中效果,使用三元运算符,根据 buy的信息来判断  51行
+      // 定义 减 标签 如果数值是 1,禁用标签,不能再减了
+      // 定义 加 标签 如果数值是 库存,禁用标签,不能再加了
+      array.forEach(function (item) {
+          str += `  <div class="panel-footer">
+                      <ul class="panel-footer-checkbox">
+                        <li><input name="checked" goods_id="${item.goods_id}" type="checkbox" ${item.buy === true ? 'checked' : ''}></li>
+                      </ul>
+                      <div class="panel-footer-content clear">
+                        <div class="left l">
+                          <img src="${item.goods_small_logo}" alt="">
+                        </div>
+                        <div class="middle l">
+                          <h3>${item.goods_name}</h3>
+                          <p>
+                            <i class="glyphicon glyphicon-yen"></i>
+                            <span>${item.goods_price}</span>
+                          </p>
+                          <button name="del" goods_id="${item.goods_id}">删除</button>
+                        </div>
+                        <div class="right r">
+                          <button type="button" name="lost" goods_id="${item.goods_id}" ${item.num == 1 ? 'disabled' : ''}>&nbsp;-&nbsp;</button>
+                          <button type="button" disabled>${item.num}</button>
+                          <button type="button" name="odd" goods_id="${item.goods_id}" ${item.num == item.goods_number ? 'disabled' : ''}>&nbsp;+&nbsp;</button>
+                        </div>
+                      </div>
+                    </div>`;
+      
+          if(item.buy === true){
+            TYPE++;           // 种类++
+            NUM += item.num;  // 数量是 += 累加
+            PAY += item.num * item.goods_price;   // 钱数是 数量*单价
+          }
+      
+      })
+
+      // 计算判断数据信息
+      
+
+
+      // 第三部分
+      // 最后结束的部分
+      // 有小数参与,会造成数值计算时精度丢失,需要保留两位小数
+      str += ` </div>
+               <div class="add">
+                  <ul>
+                    <li>商品种类：<span>${TYPE}</span></li>
+                    <li>商品总数：<span>${NUM}件</span></li>
+                    <li>总计价格：<span>${ parseInt(PAY * 100) / 100}元</span></li>  
+                    <li role="button" name="topay" class="payment">去支付</li>  
+                  </ul>
+               </div> `;
+               
+
+      $('.container').html(str);
+
+    };
+
+    // 通过事件委托,给动态生成的内容,添加点击事件
+    // 如果只是少量标签,使用jQuery事件委托更简单；如果是大量事件委托,用js的语法更简单
+
+    const oDiv = document.querySelector('.container');
+
+    oDiv.addEventListener('click' , function(e){
+      // 点击的是全选标签
+      if(e.target.getAttribute('name') === 'all'){
+        // 给数组中所有数据的buy属性都设定为true
+        cateArr.forEach(function(item){
+          item.buy = true;
+        })
+      }
+
+      // 点击的是不选标签
+      if(e.target.getAttribute('name') === 'no'){
+        // 给数组中的所有数据,buy属性都设定为false
+        cateArr.forEach(function(item){
+          item.buy = false;
+        })
+      }
+
+      // 点击的是反选标签
+      if(e.target.getAttribute('name') === 'not'){
+        // 给数组中的所有数据,buy属性都设定为原始数值取反
+        cateArr.forEach(function(item){
+          item.buy = !(item.buy);
+        })
+      }
+
+      if(e.target.getAttribute('name') === 'checked'){
+        // 获取 goods_id 的属性
+        let goods_id = e.target.getAttribute('goods_id');
+        cateArr.forEach(function(item){
+          // 如果当前item的goods_id 与 标签中存储的goods_id相同
+          if(item.goods_id === goods_id){
+            // 设定 数据 的 购买数据,是复选框当前的数据
+            item.buy = $(e.target).prop('checked');
+          }
+        })
+
+      }
+      
+      // 删除 按钮
+      if(e.target.getAttribute('name') === 'del'){
+        // 获取 goods_id 的属性
+        let goods_id = e.target.getAttribute('goods_id');
+        let bool = window.confirm('您确定从购物车删除此商品吗?');
+        if (bool) {
+          cateArr.forEach(function(item , key){
+          // 如果当前item的goods_id 与 标签中存储的goods_id相同
+          if(item.goods_id === goods_id){    // 如果没有把e.target.getAttribute('goods_id')存储到变量goods_id 中，直接获取属性：获取到的是字符串类型，不是数值类型；就不能写全等，必须是两个等号
+            // 从当前的索引下标开始,删除数组中的一个数据单元
+            cateArr.splice(key,1);
+          }
+        })
+        }    
+      }
+
+      // 添加 按钮
+      if(e.target.getAttribute('name') === 'odd'){
+        // 获取 goods_id 的属性
+        let goods_id = e.target.getAttribute('goods_id');
+        cateArr.forEach(function(item , key){
+          // 如果当前item的goods_id 与 标签中存储的goods_id相同
+          if(item.goods_id === goods_id){
+            // 购买数量++
+            item.num++;
+          }
+        })
+      }
+
+      // 减少 按钮
+      if(e.target.getAttribute('name') === 'lost'){
+        // 获取 goods_id 的属性
+        let goods_id = e.target.getAttribute('goods_id');
+        cateArr.forEach(function(item , key){
+          // 如果当前item的goods_id 与 标签中存储的goods_id相同
+          if(item.goods_id === goods_id){
+            // 购买数量--
+            item.num--;
+          }
+        })
+      }
+
+      // 不管上面哪一个事件触发了,总会改变数组中的数据
+
+      // 将新的数组,写入到页面中
+      setPage(cateArr);
+      // 把新数组的数据,写入到 localStorage 中
+      localStorage.setItem('cart' , JSON.stringify(cateArr) );
+
+      
+      if(e.target.getAttribute('name') === 'topay'){
+        if(TYPE === 0){
+          window.alert('您还没有选中商品');
+          return;
+        }
+        console.log(TYPE)
+        window.location.href = `./pay.html?money=${ parseInt(PAY * 100) / 100}`;
+      }
+
+    })
+
+    
+    
+
+    
+    
+
+
+    // 思路
+    // 先生成页面
+    // 然后添加的是 事件委托
+    // 根据点击的不同标签,来设定不同的执行程序
+    // 程序执行之后,一定有一个新的数组
+    // 根据新的数组,再次生成页面
+    // 将新的数组,写入到 localStorage 中
+
+  </script>
+</body>
+
+</html>

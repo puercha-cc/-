@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家乐饰注册页面</title>
+    <link rel="stylesheet" href="../css/res.css">
+</head>
+<body>
+    <h1>注册家乐饰账号</h1>
+    <div id="reg">
+        <ul>
+            <li>注册账号: <input type="text" name="username" placeholder="请输入账号"><!-- <span ></span> --></li><br>
+            <li> 注册密码: <input type="password" name="userpwd1" placeholder="请输入密码"></li><br>
+            <li>重复密码: <input type="password" name="userpwd2" placeholder="请再次输入密码"></li><br>
+            <li> 验 证 码 : <input type="text" name="vc1" placeholder="请输入验证码"> </li><br>
+            <li> <span name="vc2"></span><button class="a" type="button" name="reset">看不清刷新</button></li><br>
+        </ul>
+        <button class="b" name="res">立即注册</button>
+        <div class="msg" name="msg"></div>
+        <div id="footer">
+            <span> 已阅读并同意：家乐饰 </span> 用户协议 <span> 和 </span> 隐私政策 &nbsp;&nbsp;&nbsp;
+     </div> 
+    </div>
+ 
+    <script src="../js/jquery.min.js"></script>
+    <script>
+    // 设定验证码--封装生成验证码的函数
+    let str = '0123456789';
+    function setVc(){
+        let newStr = '';
+        for (let i = 1; i <= 6; i++) {
+          // 定义一个随机数,是随机下标
+          let num = parseInt(Math.random() * str.length);
+          // 验证码中的数字不重复 --- 考虑数组坍塌
+          if (newStr.indexOf(str[num]) === -1) {
+            newStr += str[num];
+          } else {
+            i--;
+          }
+        }
+        return newStr;
+    }
+
+    // 将验证码写入到span标签中
+    $('[name="vc2"]').html( setVc() );
+    // 当点击button按钮（看不清刷新）时，再往页面内写入一次
+    $('[name="reset"]').click(function(){
+      $('[name="vc2"]').html( setVc() );
+    })
+
+
+    // 完成注册功能----获取数据,向后台发送ajax请求
+    $('[name="res"]').click(function(){
+      // 1.收集数据
+      // jquery中获取input中的数据：$('标签').val()
+      let username = $('[name="username"]').val();
+      let userpwd1 = $('[name="userpwd1"]').val();
+      let userpwd2 = $('[name="userpwd2"]').val();
+      let uservc = $('[name="vc1"]').val();
+
+      // 2.做验证判断
+      // 密码和确认密码一致
+      if (userpwd1 !== userpwd2) {
+        window.alert('两次密码不一致');
+        return false;      //   jquery中的结束一切
+      }
+      // 判断验证码
+      if( uservc !== $('[name="vc2"]').html() ){
+         window.alert('验证码不正确');
+         return false;
+      }
+
+      // 3.发送ajax请求给PHP程序
+      // 请求的是 res.php这个程序
+      // 请求方式是 post , 传参是账号密码两个数据----因为账号密码不能在地址栏被人看见
+      // 注册成功,返回值是1,注册失败,返回值是0
+      $.ajax({
+          url:'../php/res.php',
+          type:'post',
+          data:{userName:username,userPwd:userpwd1},
+          dataType:'json',    // 返回的是json串
+          success:function(res){
+            if(res == '1'){
+              window.alert('注册成功,点击确定跳转首页');  // 注册成功后一定是跳转首页面，和登录是不一样的
+              window.location.href = '../index.html';    //  window.location.href =  '跳转页面'---这是固定语法
+            }else if(res == '0'){
+              window.alert('用户名被占用');
+            }
+          }
+      })
+    })
+    
+    </script>
+</body>
+
+</html>

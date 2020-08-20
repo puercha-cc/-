@@ -1,0 +1,29 @@
+* { margin: 0;padding: 0;}
+ul, li, ol { list-style: none;}
+a{text-decoration: none; color:#424242;}
+.l{ float:left;}
+.r{ float:right;}
+body{background-color: rgba(144, 253, 144,0.3);}
+.M-box{margin: 20px 100px 10px 0;padding-left:450px;}
+.M-box a{color:black;padding-right:10px;font-size:18px;}
+.M-box .active{ color: blue;font-size:18px;}  /*也可以写成 .M-box span{ color: blue;}   因为点中的是span标签*/
+
+/* .container{} */
+.list{height:550px;width:262px;border:2px solid rgb(46, 197, 46);margin-right:20px;margin-bottom: 30px;}
+.list-top{padding-top:20px;width:100%;height:80px;border-bottom: 1px solid green;}
+.list-top li{margin-left:10px;line-height:25px;text-align:center;}
+.list-top li span{color:rgb(174, 175, 174);} 
+.list-top li.active{color:rgb(174, 175, 174);}
+.list-middle{height:360px;padding-top:10px;margin:0 10px;}
+.list-middle img{height:200px;width:100%;display:block;}
+.list-middle img:hover{position: relative;top:-10px;opacity:0.7;}
+.list-middle h3{line-height:28px;font-size:18px;}
+
+
+.list-footer{height:70px;width:100%;}
+.list-footer .list-footer-text{margin:0 50px;line-height:30px;font-size:26px;font-weight:bold;color:rgb(46, 197, 46);margin-bottom:10px;}
+.list-footer .list-footer-detail{margin:0 30px;position:flex;left:20px;bottom:20px; height:38px;width:180px;line-height:38px;text-align:center;font-size:14px;border-radius: 3%; background-color: rgb(250, 123, 123);}
+.list-footer .list-footer-detail a{color:white;text-decoration: none;font-size:20px;}
+.list-footer .list-footer-detail a:hover{color:rgb(7, 248, 7);}
+
+
